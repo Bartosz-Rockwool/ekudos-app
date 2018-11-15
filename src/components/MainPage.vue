@@ -1,76 +1,73 @@
 <template>
     <v-content>
         <section>
-            <v-parallax :src="require('../assets/main-page-background.jpg')" height="600">
-                <v-layout align-center justify-center id="kudo">
-                    <v-flex xs12 sm8 md4>
-                        <v-card class="elevation-12">
-                            <v-toolbar dark color="primary">
-                                <v-toolbar-title>Kudos for ...</v-toolbar-title>
-                                <v-spacer></v-spacer>
-                            </v-toolbar>
-                            <v-card-text>
-                                <v-form>
-                                    <v-text-field 
-                                        prepend-icon="person" 
-                                        name="name" 
-                                        label="Whom" 
-                                        type="text"
-                                        v-model="name"
-                                    >
-                                    </v-text-field>
-                                    <v-textarea
-                                        rows="1"
-                                        prepend-icon="subject"
-                                        name="description"
-                                        label="What for"
-                                        v-model="description"
-                                    ></v-textarea>
-                                </v-form>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" @click="submitEntry">Add</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-            </v-parallax>
+            <v-layout align-center justify-center id="kudo">
+                <v-flex xs12 sm8 md4 mt-5>
+                    <v-card class="elevation-12">
+                        <v-toolbar dark color="#d20014">
+                            <v-toolbar-title>Kudos for ...</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-form>
+                                <v-text-field 
+                                    prepend-icon="person" 
+                                    name="name" 
+                                    label="Whom" 
+                                    type="text"
+                                    v-model="name"
+                                >
+                                </v-text-field>
+                                <v-textarea
+                                    rows="1"
+                                    prepend-icon="subject"
+                                    name="description"
+                                    label="What for"
+                                    v-model="description"
+                                ></v-textarea>
+                            </v-form>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="#d20014" dark @click="submitEntry">Add</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </v-layout>
         </section>
         <section>
-            <div class="text-xs-center">
-                <v-dialog
+            <v-dialog
                 v-model="dialog"
                 width="800">
                 <v-card>
-                    <v-card-title
-                        class="primary"
-                        primary-title>
-                        {{ this.kudoses[this.selected].who }}
+                    <v-img
+                    class="white--text"
+                    height="200px"
+                    :src="require('../assets/trees.jpg')"
+                    >
+                    <v-container fill-height fluid>
+                        <v-layout fill-height>
+                        <v-flex xs12 align-end flexbox>
+                            <span class="headline font-weight-bold">{{ this.kudoses[this.selected].who }}</span>
+                        </v-flex>
+                        </v-layout>
+                    </v-container>
+                    </v-img>
+                    <v-card-title>
+                    <div>
+                        <span class="title font-weight-light">{{ this.kudoses[this.selected].title }}</span><br>
+                    </div>
                     </v-card-title>
-
-                    <v-card-text>
-                        {{ this.kudoses[this.selected].title }}
-                    </v-card-text>
-
                     <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        color="primary"
-                        flat
-                        @click="dialog = false">
-                        OK
-                    </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn flat @click="dialog = false"> OK</v-btn>
                     </v-card-actions>
                 </v-card>
-                </v-dialog>
-            </div>
-        </section>
-        <section>
+            </v-dialog>
             <v-layout row id="kudo-bord">
                 <v-flex xs12 sm6 offset-sm3 mb-5>
                     <v-card>
-                        <v-toolbar color="primary" dark>
+                        <v-toolbar color="#d20014" dark>
                             <v-toolbar-title>Who got kudos</v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
@@ -152,6 +149,7 @@ export default {
 <style>
 .v-content {
     margin-top: -64px;
+    background-image: url('../assets/rock7.jpg')
 }
 
 .v-card {
@@ -159,10 +157,15 @@ export default {
 }
 
 .v-textarea .v-text-field__slot {
-        height: 32px;
+    height: 32px;
 } 
 
 .v-textarea textarea {
     padding-bottom: 0;
 } 
+
+#kudo {
+    margin-top: 60px;
+    margin-bottom: 120px;
+}
 </style>

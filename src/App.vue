@@ -1,15 +1,12 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <v-btn flat href="#kudo">
-          <span>E-Kudos</span>
-        </v-btn>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn flat href="#kudo-bord">
-        <span class="mr-2">Kudo board</span>
-      </v-btn>
+  <v-app class="white">
+    <v-toolbar app class="white">
+        <v-toolbar-title>Ekudos</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+            <v-btn flat href="#kudo">Add</v-btn>
+            <v-btn flat href="#kudo-bord">Board</v-btn>
+        </v-toolbar-items>
     </v-toolbar>
 
     <v-content>
