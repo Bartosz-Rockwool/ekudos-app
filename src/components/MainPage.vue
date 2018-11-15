@@ -38,45 +38,74 @@
             </v-parallax>
         </section>
         <section>
+            <div class="text-xs-center">
+                <v-dialog
+                v-model="dialog"
+                width="800">
+                <v-card>
+                    <v-card-title
+                        class="primary"
+                        primary-title>
+                        {{ this.kudoses[this.selected].who }}
+                    </v-card-title>
+
+                    <v-card-text>
+                        {{ this.kudoses[this.selected].title }}
+                    </v-card-text>
+
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="primary"
+                        flat
+                        @click="dialog = false">
+                        OK
+                    </v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
+            </div>
+        </section>
+        <section>
             <v-layout row id="kudo-bord">
-                <v-flex xs12 sm6 offset-sm3>
+                <v-flex xs12 sm6 offset-sm3 mb-5>
                     <v-card>
-                    <v-toolbar color="primary" dark>
-                        <v-toolbar-title>Who got kudos</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                    </v-toolbar>
+                        <v-toolbar color="primary" dark>
+                            <v-toolbar-title>Who got kudos</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                        </v-toolbar>
             
-                    <v-list two-line>
-                        <template v-for="(kudos, index) in kudoses">
-                            <v-subheader
-                                v-if="kudos.header"
-                                :key="kudos.header"
-                            >
-                                {{ kudos.header }}
-                            </v-subheader>
-                
-                            <v-divider
-                                v-else-if="kudos.divider"
-                                :inset="kudos.inset"
-                                :key="index"
-                            ></v-divider>
-                
-                            <v-list-tile
-                                v-else
-                                :key="kudos.title + index"
-                                avatar
-                            >
-                                <v-list-tile-avatar>
-                                    <img :src="kudos.avatar">
-                                </v-list-tile-avatar>
-                
-                                <v-list-tile-content>
-                                    <v-list-tile-title v-html="kudos.who"></v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="kudos.title"></v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </template>
-                    </v-list>
+                        <v-list two-line>
+                            <template v-for="(kudos, index) in kudoses">
+                                <v-subheader
+                                    v-if="kudos.header"
+                                    :key="kudos.header">
+                                    {{ kudos.header }}
+                                </v-subheader>
+                    
+                                <v-divider
+                                    v-else-if="kudos.divider"
+                                    :inset="kudos.inset"
+                                    :key="index">
+                                </v-divider>
+                    
+                                <v-list-tile
+                                    v-else
+                                    :key="kudos.title + index"
+                                    avatar
+                                    @click="selectKudos(index)">
+
+                                    <v-list-tile-avatar>
+                                        <img :src="kudos.avatar">
+                                    </v-list-tile-avatar>
+                        
+                                    <v-list-tile-content>
+                                        <v-list-tile-title v-html="kudos.who"></v-list-tile-title>
+                                        <v-list-tile-sub-title v-html="kudos.title"></v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                            </template>
+                        </v-list>
                     </v-card>
                 </v-flex>
                 </v-layout>
@@ -89,23 +118,11 @@ import axios from 'axios';
 
 export default {
   data: () => ({
+    dialog: false,
     name: '',
     description: '',
-    kudoses: [
-        { header: 'Today' },
-        {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            who: "Nobody",
-            title: "For sth from sb"
-        },
-        { divider: true, inset: true },
-        {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            who: "Nobody",
-            title: "For sth from sb"
-        },
-        { divider: true, inset: true }
-    ]
+    kudoses: [],
+    selected: 0
   })
   ,
   mounted () {
@@ -113,8 +130,8 @@ export default {
       .get('http://ekudosapi.azurewebsites.net/api/ekudos', { crossdomain: true })
       .then(response => (this.kudoses = response.data))
   },
-  methods: {
-      submitEntry: function() {
+    methods: {
+        submitEntry: function() {
             axios.post('http://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description })
                 .then(response => {
                     this.responseData = response.data;
@@ -123,7 +140,12 @@ export default {
                 .catch(error => { error });
                 
            
-      }}
+        },
+        selectKudos(kudosIndex) {
+            this.dialog = true;
+            this.selected = kudosIndex;
+        }
+    }
 };
 </script>
 
