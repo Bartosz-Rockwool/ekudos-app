@@ -40,11 +40,6 @@
                 v-model="dialog"
                 width="800">
                 <v-card>
-                    <v-img
-                    class="white--text"
-                    height="200px"
-                    :src="require('../assets/trees.jpg')"
-                    >
                     <v-container fill-height fluid>
                         <v-layout fill-height>
                         <v-flex xs12 align-end flexbox>
@@ -152,10 +147,6 @@ export default {
     background-image: url('../assets/rock7.jpg')
 }
 
-.v-card {
-    margin-top: 48px;
-}
-
 .v-textarea .v-text-field__slot {
     height: 32px;
 } 
@@ -165,7 +156,7 @@ export default {
 } 
 
 #kudo {
-    margin-top: 60px;
-    margin-bottom: 120px;
+    margin-top: 100px;
+    margin-bottom: 180px;
 }
 </style>
