@@ -1,7 +1,9 @@
 <template>
   <v-app class="white">
     <v-toolbar app class="white">
-        <v-toolbar-title>Ekudos</v-toolbar-title>
+        <v-btn flat href="#kudo" id="logoButton">
+          <v-toolbar-title>Ekudos</v-toolbar-title>
+        </v-btn>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat href="#kudo">Add</v-btn>
