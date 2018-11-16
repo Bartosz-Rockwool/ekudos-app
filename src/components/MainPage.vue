@@ -15,16 +15,15 @@
                                     name="name" 
                                     label="Whom" 
                                     type="text"
-                                    v-model="name"
-                                >
+                                    v-model="name">
                                 </v-text-field>
                                 <v-textarea
                                     rows="1"
                                     prepend-icon="subject"
                                     name="description"
                                     label="What for"
-                                    v-model="description"
-                                ></v-textarea>
+                                    v-model="description">
+                                </v-textarea>
                             </v-form>
                         </v-card-text>
                         <v-card-actions>
@@ -47,7 +46,6 @@
                         </v-flex>
                         </v-layout>
                     </v-container>
-                    </v-img>
                     <v-card-title>
                     <div>
                         <span class="title font-weight-light">{{ this.kudoses[this.selected].title }}</span><br>
@@ -74,13 +72,11 @@
                                     :key="kudos.header">
                                     {{ kudos.header }}
                                 </v-subheader>
-                    
                                 <v-divider
                                     v-else-if="kudos.divider"
                                     :inset="kudos.inset"
                                     :key="index">
                                 </v-divider>
-                    
                                 <v-list-tile
                                     v-else
                                     :key="kudos.title + index"
@@ -130,8 +126,6 @@ export default {
                     alert('Your e-kudos has been sent');
                 })
                 .catch(error => { error });
-                
-           
         },
         selectKudos(kudosIndex) {
             this.dialog = true;
