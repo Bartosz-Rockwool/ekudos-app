@@ -1,6 +1,8 @@
 <template>
     <v-toolbar app flat class="white" height="105" >
-        <img src="../assets/rockudo_logo_black.svg" height="75"/>
+        <a href="#kudo">
+            <img src="../assets/rockudo_logo_black.svg" height="75"/>
+        </a>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat href="#kudo">
