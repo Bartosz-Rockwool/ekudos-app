@@ -70,8 +70,6 @@ import KudoBoard from './KudoBoard'
 export default {
     data: () => ({
         dialog: false,
-        name: '',
-        description: '',
         kudoses: [],
         selected: 0,
         title: '',

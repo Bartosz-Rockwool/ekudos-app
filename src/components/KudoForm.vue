@@ -18,7 +18,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <div class="text-xs-center">
-                        <v-btn color="#d20014" dark large>Add</v-btn>
+                        <v-btn color="#d20014" dark large @click="submitEntry">Add</v-btn>
                     </div>
                 </v-card-actions>
             </v-card>
@@ -31,20 +31,16 @@ import axios from 'axios';
 
 export default {
     data: () => ({
-        dialog: false,
         name: '',
         description: '',
-        kudoses: [],
-        selected: 0,
-        title: '',
-        whom: ''
     }),
     methods: {
         submitEntry() {
             axios.post('http://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description })
                 .then(response => {
                     this.responseData = response.data;
-                    alert('Your e-kudos has been sent');
+                    this.name = '';
+                    this.description = '';
                 })
                 .catch(error => { error });
         }
@@ -57,7 +53,7 @@ export default {
         background-color: transparent!important;
         border-color: transparent!important;
     }
-    
+
     .red-underline {
         text-decoration-color: red; 
     }
