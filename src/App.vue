@@ -1,34 +1,61 @@
 <template>
   <v-app class="white">
-    <v-toolbar app class="white">
-        <v-btn flat href="#kudo" id="logoButton">
-          <v-toolbar-title>Ekudos</v-toolbar-title>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat href="#kudo">Add</v-btn>
-            <v-btn flat href="#kudo-bord">Board</v-btn>
-        </v-toolbar-items>
-    </v-toolbar>
-
-    <v-content>
-      <MainPage/>
+    <v-content id="mainContent">
+        <section>
+            <Toolbar />
+        </section>
+        <section>
+            <KudoForm />
+        </section>
+        <section>
+            <KudoBoard />
+        </section>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import MainPage from './components/MainPage'
+import Toolbar from './components/Toolbar'
+import KudoForm from './components/KudoForm'
+import KudoBoard from './components/KudoBoard'
 
 export default {
   name: 'App',
   components: {
-    MainPage
+    Toolbar,
+    KudoForm,
+    KudoBoard
   },
   data () {
     return {
-      //
+
     }
   }
 }
 </script>
+
+<style>
+
+#mainContent {
+    background-image: url('assets/rockudo_background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.v-content {
+    margin-top: -64px;
+}
+
+.v-textarea .v-text-field__slot {
+    height: 32px;
+} 
+
+.v-textarea textarea {
+    padding-bottom: 0;
+} 
+
+#kudo {
+    margin-top: 100px;
+    margin-bottom: 180px;
+}
+</style>
