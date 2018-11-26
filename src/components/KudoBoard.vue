@@ -63,9 +63,6 @@
 
 <script>
 import axios from 'axios';
-import Toolbar from './Toolbar'
-import KudoForm from './KudoForm'
-import KudoBoard from './KudoBoard'
 
 export default {
     data: () => ({
