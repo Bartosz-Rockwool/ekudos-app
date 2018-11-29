@@ -5,7 +5,7 @@
         </a>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat href="#kudo">
+            <v-btn flat href="#kudo"  @click="setFocusOnForm">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_1.png"/>
                     <p class="font-weight-black">Give Kudos</p>
@@ -28,12 +28,10 @@
 </template>
 
 <script>
-
 export default {
     methods: {
-        addKudo(kudosIndex) {
-            console.log(this.$refs)
-            this.$nextTick(() => this.$refs.whom.focus()) 
+        setFocusOnForm() {
+            this.$eventBus.$emit('set-focus-in-form-on-input-whom');
         }
     }
 };
