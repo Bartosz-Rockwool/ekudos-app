@@ -46,8 +46,6 @@ export default {
                     this.description = '';
                 })
                 .catch(error => { error });
-
-            this.$refs.whom.focus();
         }
     },
     mounted: function () {
