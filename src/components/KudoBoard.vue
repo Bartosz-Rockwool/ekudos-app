@@ -25,8 +25,25 @@
             <v-flex xs12 sm6 offset-sm3 mb-5 >
                 <v-card>
                     <v-toolbar color="#d20014" dark>
-                        <img src="../assets/header_kudoboard.png"/>
-                        <v-toolbar-title>KUDO BOARD</v-toolbar-title>
+                        <v-layout>
+                            <v-flex xs8>
+                                <v-layout class="v-text-field">
+                                    <v-flex xs1>
+                                        <img src="../assets/header_kudoboard.png"/>
+                                    </v-flex>
+                                    <v-flex xs11>
+                                        <v-toolbar-title>KUDO BOARD</v-toolbar-title>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-combobox
+                                    v-model="selectedSort"
+                                    :items="items"
+                                    @change="changeSort"
+                                ></v-combobox>
+                            </v-flex>
+                        </v-layout>
                      </v-toolbar>
                      <v-list two-line>
                         <template v-for="(kudos, index) in kudoses">
@@ -70,12 +87,17 @@ export default {
         kudoses: [],
         selected: 0,
         title: '',
-        whom: ''
+        whom: '',
+        selectedSort: { text: 'Newest', value: 'date-descending' },
+        items: [
+            { text: 'Newest', value: 'date-descending' },
+            { text: 'Oldest', value: 'date-ascending' }
+        ]
     }),
      mounted () {
         axios
-        .get('http://ekudosapi.azurewebsites.net/api/ekudos')
-        .then(response => (this.kudoses = response.data))
+            .get('http://ekudosapi.azurewebsites.net/api/ekudos')
+            .then(response => (this.kudoses = response.data))
     },
     methods: {
         selectKudos(kudosIndex) {
@@ -83,6 +105,14 @@ export default {
             this.selected = kudosIndex;
             this.title = this.kudoses[this.selected].title;
             this.whom = this.kudoses[this.selected].who;
+        },
+        changeSort() {
+            var direct = this.selectedSort.value === 'date-descending' ? 'Desc' : 'Asc';
+            var sort = "When";
+
+            axios
+                .get(`http://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`)
+                .then(response => (this.kudoses = response.data));
         }
     }
 };
