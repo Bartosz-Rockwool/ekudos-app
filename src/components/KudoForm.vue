@@ -29,6 +29,9 @@
 <script>
 import axios from 'axios';
 
+// https://alligator.io/vuejs/component-communication/
+// https://alligator.io/vuejs/global-event-bus/
+
 export default {
     data: () => ({
         name: '',
@@ -44,6 +47,11 @@ export default {
                 })
                 .catch(error => { error });
         }
+    },
+    mounted: function () {
+        this.$eventBus.$on('set-focus-in-form-on-input-whom', () => {
+            this.$nextTick(() => this.$refs.whom.focus())
+        });
     }
 };
 </script>

@@ -27,9 +27,7 @@ export default {
     KudoBoard
   },
   data () {
-    return {
-
-    }
+    return { }
   }
 }
 </script>

@@ -74,7 +74,7 @@ export default {
     }),
      mounted () {
         axios
-        .get('http://ekudosapi.azurewebsites.net/api/ekudos', { crossdomain: true })
+        .get('http://ekudosapi.azurewebsites.net/api/ekudos')
         .then(response => (this.kudoses = response.data))
     },
     methods: {
