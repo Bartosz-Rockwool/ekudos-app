@@ -11,6 +11,8 @@
                     <v-form>
                         <v-text-field prepend-icon="person" name="name" label="to Whom?" type="text" ref="whom" v-model="name">
                         </v-text-field>
+                        <v-text-field prepend-icon="person" name="whoFrom" label="from Who?" type="text" ref="whoFrom" v-model="whoFrom">
+                        </v-text-field>
                         <v-textarea rows="1" prepend-icon="subject" name="description" label="What do you want to say?" v-model="description">
                         </v-textarea>
                     </v-form>
@@ -18,7 +20,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <div class="text-xs-center">
-                        <v-btn color="#d20014" dark large @click="submitEntry">Add</v-btn>
+                        <v-btn color="#d20014" dark large @click="submitEntry" :disabled="name==='' || description === '' || whoFrom === ''">Add</v-btn>
                     </div>
                 </v-card-actions>
             </v-card>
@@ -36,14 +38,17 @@ export default {
     data: () => ({
         name: '',
         description: '',
+        whoFrom: ''
     }),
     methods: {
         submitEntry() {
-            axios.post('http://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description })
+            axios.post('http://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
                 .then(response => {
                     this.responseData = response.data;
                     this.name = '';
                     this.description = '';
+                    this.whoFrom = '';
+                    this.$eventBus.$emit('refresh-kudo-board');
                 })
                 .catch(error => { error });
         }
