@@ -54,15 +54,15 @@
                                     <img src="../assets/avatar_female.png"/>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content class="tile">
-                                    <v-list-tile-title v-html="kudos.who"></v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="kudos.title"></v-list-tile-sub-title>
+                                    <v-list-tile-title>{{kudos.who}}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{kudos.title}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-icon large class="tileIcon">arrow_back</v-icon>
                                 <v-list-tile-avatar class="avatar">
                                     <img src="../assets/avatar_male.png"/>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content class="tile">
-                                    <v-list-tile-title v-html="kudos.whoFrom"></v-list-tile-title>
+                                    <v-list-tile-title>{{kudos.whoFrom}}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{kudos.when}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-spacer></v-spacer>
@@ -96,7 +96,7 @@ export default {
     }),
      mounted () {
         axios
-            .get('http://ekudosapi.azurewebsites.net/api/ekudos')
+            .get('https://ekudosapi.azurewebsites.net/api/ekudos')
             .then(response => (this.kudoses = this.parseDate(response.data)));
 
         this.$eventBus.$on('refresh-kudo-board', () => {
@@ -125,7 +125,7 @@ export default {
             var sort = "When";
 
             axios
-                .get(`http://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`)
+                .get(`https://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`)
                 .then(response => (this.kudoses = this.parseDate(response.data)));
         }
     }
