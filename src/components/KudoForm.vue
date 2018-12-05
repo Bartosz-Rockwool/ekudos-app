@@ -42,7 +42,7 @@ export default {
     }),
     methods: {
         submitEntry() {
-            axios.post('http://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
+            axios.post('https://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
                 .then(response => {
                     this.responseData = response.data;
                     this.name = '';
