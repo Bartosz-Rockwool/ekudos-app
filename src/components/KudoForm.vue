@@ -20,7 +20,8 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <div class="text-xs-center">
-                        <v-btn color="#d20014" dark large @click="submitEntry" :disabled="name==='' || description === '' || whoFrom === ''">Add</v-btn>
+                        <v-btn color="#d20014" v-if="!addingKudoLoader" dark large @click="submitEntry" :disabled="name==='' || description === '' || whoFrom === ''">Add</v-btn>
+                        <v-progress-circular v-if="addingKudoLoader" indeterminate color="red"></v-progress-circular>
                     </div>
                 </v-card-actions>
             </v-card>
@@ -38,10 +39,13 @@ export default {
     data: () => ({
         name: '',
         description: '',
-        whoFrom: ''
+        whoFrom: '',
+        addingKudoLoader: false
     }),
     methods: {
         submitEntry() {
+            this.addingKudoLoader = true;
+
             axios.post('https://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
                 .then(response => {
                     this.responseData = response.data;
@@ -49,6 +53,7 @@ export default {
                     this.description = '';
                     this.whoFrom = '';
                     this.$eventBus.$emit('refresh-kudo-board');
+                    this.addingKudoLoader = false;
                 })
                 .catch(error => { error });
         }
