@@ -4,27 +4,18 @@
         <section>
             <Toolbar />
         </section>
-        <section>
-            <KudoForm />
-        </section>
-        <section>
-            <KudoBoard />
-        </section>
+        <router-view/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Toolbar from './components/Toolbar'
-import KudoForm from './components/KudoForm'
-import KudoBoard from './components/KudoBoard'
 
 export default {
   name: 'App',
   components: {
-    Toolbar,
-    KudoForm,
-    KudoBoard
+    Toolbar
   },
   data () {
     return { }

@@ -17,6 +17,12 @@
                     <p class="font-weight-black">Kudo Board</p>
                 </div>
             </v-btn>
+            <v-btn flat v-on:click="login">
+                <div class="img-with-text">
+                    <img src="../assets/mainmenu_2.png"/>
+                    <p class="font-weight-black">Login</p>
+                </div>
+            </v-btn>
             <v-dialog
                 full-width
                 transition="slide-y-transition"
@@ -116,7 +122,19 @@
 </template>
 
 <script>
+import logger from '../providers/logProvider';
+
 export default {
+    created: function() {
+        logger.Information("Created toolbar");
+        logger.LogData(this.$store.getters.isAuthenticated);
+        //this.$store.commit('isAuthenticated', true);  
+        // if(!this.$store.getters.isAuthenticated) {
+        //     this.$store.dispatch("login").then((response)=>{
+        //         console.log(response);
+        //     });
+        // }
+    },
     data() {
         return {
             dialog: false
@@ -125,6 +143,17 @@ export default {
     methods: {
         setFocusOnForm() {
             this.$eventBus.$emit('set-focus-in-form-on-input-whom');
+        },
+        login() {
+            this.$store.dispatch("login").then((response)=>{
+                if(response.success) {
+                      logger.LogData(response);
+                      this.$store.commit('add_token', response.token);    
+                      this.$store.commit('isAuthenticated', true);  
+                      this.$store.commit('set_user', response.user);  
+                      //this.$router.push({name : "App"})  
+                }
+            });
         }
     }
 };

@@ -46,7 +46,14 @@ export default {
         submitEntry() {
             this.addingKudoLoader = true;
 
-            axios.post('https://ekudosapi.azurewebsites.net/api/ekudos', { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
+            var url = '';
+            if(location.protocol != 'https:'){
+                url = 'http://ekudosapi.azurewebsites.net/api/ekudos';
+            } else {
+                url = 'https://ekudosapi.azurewebsites.net/api/ekudos';
+            }
+
+            axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
                 .then(response => {
                     this.responseData = response.data;
                     this.name = '';
