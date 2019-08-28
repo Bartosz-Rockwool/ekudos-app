@@ -128,12 +128,6 @@ export default {
     created: function() {
         logger.Information("Created toolbar");
         logger.LogData(this.$store.getters.isAuthenticated);
-        //this.$store.commit('isAuthenticated', true);  
-        // if(!this.$store.getters.isAuthenticated) {
-        //     this.$store.dispatch("login").then((response)=>{
-        //         console.log(response);
-        //     });
-        // }
     },
     data() {
         return {
@@ -145,15 +139,7 @@ export default {
             this.$eventBus.$emit('set-focus-in-form-on-input-whom');
         },
         login() {
-            this.$store.dispatch("login").then((response)=>{
-                if(response.success) {
-                      logger.LogData(response);
-                      this.$store.commit('add_token', response.token);    
-                      this.$store.commit('isAuthenticated', true);  
-                      this.$store.commit('set_user', response.user);  
-                      //this.$router.push({name : "App"})  
-                }
-            });
+            this.$router.push({name : "live"});
         }
     }
 };

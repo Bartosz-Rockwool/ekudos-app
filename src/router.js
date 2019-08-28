@@ -12,12 +12,18 @@ export default new VueRouter({
     {
       path: '/',
       name : "main",
-      component : KudoMain
+      component : KudoMain,
+      meta: {
+        requireAuth: false
+      }
     },
     {
       path: '/live',
       name : "live",
-      component : Live
+      component : Live,
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 });
