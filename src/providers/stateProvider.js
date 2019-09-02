@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
 import Adal from 'vue-adal'
+import { AuthenticationContext } from 'vue-adal'
 
 Vue.use(Adal, {
       config: {
@@ -19,33 +20,32 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        token: localStorage.getItem('token') || '',
-        isAuthenthicated : false,
-        user : null
+        isAuthenthicated : false
     },
     mutations: {
-        add_token(state , token) {
-            localStorage.setItem("token",token);
-            state.token = token;
-        },
-        isAuthenticated(state, payload) {
-            state.isAuthenticated = payload;
-        },
         set_user(state, user) {
             state.user = user;
         }
     },
     getters: {
-        isAuthenticated() {
-          return true;
+        isAuthenticated(state) {
+          return state.isAuthenthicated;
         },
         user(state) {
-          return state.user;
+            let user = AuthenticationContext.user;
+            if(user && user.profile)
+            {
+                state.isAuthenthicated = true;
+                return AuthenticationContext.user.profile;
+            }
+            
+            state.isAuthenthicated = false;
+            return null;
         }
     },
     actions: {
         login() {
-            //AuthenticationContext.login();
+            AuthenticationContext.login();
         }
     }
 });

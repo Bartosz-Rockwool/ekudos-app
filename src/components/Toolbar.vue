@@ -127,11 +127,13 @@ import logger from '../providers/logProvider';
 export default {
     created: function() {
         logger.Information("Created toolbar");
+        logger.LogData(this.$store.getters.user);
         logger.LogData(this.$store.getters.isAuthenticated);
     },
     data() {
         return {
-            dialog: false
+            dialog: false,
+            isAuthenticated: () => { return this.$store.getters.isAuthenticated; }
         }
     },
     methods: {
@@ -139,7 +141,8 @@ export default {
             this.$eventBus.$emit('set-focus-in-form-on-input-whom');
         },
         login() {
-            this.$router.push({name : "live"});
+            this.$store.dispatch('login');
+            //this.$router.push({name : "live"});
         }
     }
 };
