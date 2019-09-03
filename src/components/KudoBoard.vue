@@ -95,8 +95,14 @@ export default {
         ]
     }),
      mounted () {
+         var url = '';
+            if(location.protocol != 'https:'){
+                url = 'http://ekudosapi.azurewebsites.net/api/ekudos';
+            } else {
+                url = 'https://ekudosapi.azurewebsites.net/api/ekudos';
+            }
         axios
-            .get('https://ekudosapi.azurewebsites.net/api/ekudos')
+            .get(url)
             .then(response => (this.kudoses = this.parseDate(response.data)));
 
         this.$eventBus.$on('refresh-kudo-board', () => {
@@ -123,9 +129,14 @@ export default {
         changeSort() {
             var direct = this.selectedSort.value === 'date-descending' ? 'Desc' : 'Asc';
             var sort = "When";
-
+            var url = '';
+            if(location.protocol != 'https:'){
+                url = `http://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`;
+            } else {
+                url = `https://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`;
+            }
             axios
-                .get(`https://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`)
+                .get(url)
                 .then(response => (this.kudoses = this.parseDate(response.data)));
         }
     }

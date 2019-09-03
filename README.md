@@ -27,3 +27,11 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Used library
+ADAL
+https://www.npmjs.com/package/vue-adal
+https://github.com/matt-ankerson/vue-adal
+https://github.com/AzureAD/azure-activedirectory-library-for-js
+
