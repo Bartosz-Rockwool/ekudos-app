@@ -5,6 +5,12 @@
         </a>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
+            <v-btn flat v-if="isLoggedUser()">
+                <div class="img-with-text">
+                    <img src="../assets/mainmenu_1.png"/>
+                    <p class="font-weight-black">{{username()}}</p>
+                </div>
+            </v-btn>
             <v-btn flat href="#kudo"  @click="setFocusOnForm">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_1.png"/>
@@ -17,10 +23,16 @@
                     <p class="font-weight-black">Kudo Board</p>
                 </div>
             </v-btn>
-            <v-btn flat v-on:click="login">
+            <v-btn flat v-if="!isLoggedUser()" v-on:click="login">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Login</p>
+                </div>
+            </v-btn>
+            <v-btn flat v-if="isLoggedUser()" v-on:click="logout">
+                <div class="img-with-text">
+                    <img src="../assets/mainmenu_2.png"/>
+                    <p class="font-weight-black">Logout</p>
                 </div>
             </v-btn>
             <v-dialog
@@ -127,22 +139,27 @@ import logger from '../providers/logProvider';
 export default {
     created: function() {
         logger.Information("Created toolbar");
-        logger.LogData(this.$store.getters.user);
-        logger.LogData(this.$store.getters.isAuthenticated);
     },
     data() {
         return {
-            dialog: false,
-            isAuthenticated: () => { return this.$store.getters.isAuthenticated; }
+            dialog: false
         }
     },
     methods: {
+        isLoggedUser() {
+            return this.$store.getters.isAuthenticated;
+        },
+        username() { 
+            return this.$store.getters.user.name; 
+        },
         setFocusOnForm() {
             this.$eventBus.$emit('set-focus-in-form-on-input-whom');
         },
         login() {
             this.$store.dispatch('login');
-            //this.$router.push({name : "live"});
+        },
+        logout() {
+            this.$store.dispatch('logout');
         }
     }
 };

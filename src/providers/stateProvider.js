@@ -6,7 +6,13 @@ import { AuthenticationContext } from 'vue-adal'
 
 Vue.use(Adal, {
       config: {
+        // ROCKWOOL
+        //tenant: 'ec85c1f0-148f-4d0f-b9f5-bfd62a99ed8c',
+        // DEVELOPER
         tenant: '0a3a9199-117f-4551-be5b-0e3957a58d2a',
+        // ROCKWOOL
+        //clientId: 'a0d257d2-594a-49bb-8527-893d9399dc2d',
+        // DEVELOPER
         clientId: '96b137cd-68f0-4104-afc6-1d252e4be5fd',
         redirectUri: 'http://localhost:8080/live',
         cacheLocation: 'localStorage'
@@ -15,37 +21,32 @@ Vue.use(Adal, {
       router
 });
 
+Vue.use(Vuex);
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-    state: {
-        isAuthenthicated : false
-    },
-    mutations: {
-        set_user(state, user) {
-            state.user = user;
-        }
-    },
+const store = new Vuex.Store({
+    state: { },
+    mutations: { },
     getters: {
-        isAuthenticated(state) {
-          return state.isAuthenthicated;
+        isAuthenticated() {
+            return !!AuthenticationContext.user;
         },
-        user(state) {
+        user() {
             let user = AuthenticationContext.user;
             if(user && user.profile)
             {
-                state.isAuthenthicated = true;
                 return AuthenticationContext.user.profile;
             }
-            
-            state.isAuthenthicated = false;
             return null;
         }
     },
     actions: {
         login() {
             AuthenticationContext.login();
+        },
+        logout() {
+            AuthenticationContext.logout();
         }
     }
 });
+
+export default store;
