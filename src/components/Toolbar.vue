@@ -5,31 +5,31 @@
         </a>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat v-if="isLoggedUser()">
+            <v-btn flat v-if="isLoggedUser">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_1.png"/>
-                    <p class="font-weight-black">{{username()}}</p>
+                    <p class="font-weight-black">{{username}}</p>
                 </div>
             </v-btn>
-            <v-btn flat href="#kudo"  @click="setFocusOnForm">
+            <v-btn flat href="#kudo"  @click="setFocusOnForm" v-if="isLoggedUser">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_1.png"/>
                     <p class="font-weight-black">Give Kudos</p>
                 </div>
             </v-btn>
-            <v-btn flat href="#kudo-bord">
+            <v-btn flat href="#kudo-bord" v-if="isLoggedUser">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Kudo Board</p>
                 </div>
             </v-btn>
-            <v-btn flat v-if="!isLoggedUser()" v-on:click="login">
+            <v-btn flat v-if="!isLoggedUser" v-on:click="login">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Login</p>
                 </div>
             </v-btn>
-            <v-btn flat v-if="isLoggedUser()" v-on:click="logout">
+            <v-btn flat v-if="isLoggedUser" v-on:click="logout">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Logout</p>
@@ -145,13 +145,11 @@ export default {
             dialog: false
         }
     },
+    computed: {
+        isLoggedUser: function() { return this.$store.getters.isAuthenticated; },
+        username: function() { return this.$store.getters.user.name; },
+    },
     methods: {
-        isLoggedUser() {
-            return this.$store.getters.isAuthenticated;
-        },
-        username() { 
-            return this.$store.getters.user.name; 
-        },
         setFocusOnForm() {
             this.$eventBus.$emit('set-focus-in-form-on-input-whom');
         },

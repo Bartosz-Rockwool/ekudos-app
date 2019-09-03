@@ -11,7 +11,7 @@
                     <v-form>
                         <v-text-field prepend-icon="person" name="name" label="to Whom?" type="text" ref="whom" v-model="name">
                         </v-text-field>
-                        <v-text-field prepend-icon="person" name="whoFrom" label="from Who?" type="text" ref="whoFrom" v-model="whoFrom">
+                        <v-text-field prepend-icon="person" name="whoFrom" label="from Who?" type="text" ref="whoFrom" readonly :value="whoFrom">
                         </v-text-field>
                         <v-textarea rows="1" prepend-icon="subject" name="description" label="What do you want to say?" v-model="description">
                         </v-textarea>
@@ -39,9 +39,11 @@ export default {
     data: () => ({
         name: '',
         description: '',
-        whoFrom: '',
         addingKudoLoader: false
     }),
+    computed: {
+        whoFrom: function() { return this.$store.getters.user.unique_name; },
+    },
     methods: {
         submitEntry() {
             this.addingKudoLoader = true;
@@ -58,7 +60,6 @@ export default {
                     this.responseData = response.data;
                     this.name = '';
                     this.description = '';
-                    this.whoFrom = '';
                     this.$eventBus.$emit('refresh-kudo-board');
                     this.addingKudoLoader = false;
                 })
