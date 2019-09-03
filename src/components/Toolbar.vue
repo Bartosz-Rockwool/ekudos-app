@@ -5,19 +5,19 @@
         </a>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat href="#kudo"  @click="setFocusOnForm">
+            <v-btn flat href="#kudo"  @click="setFocusOnForm" v-if="isAuthenticated">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_1.png"/>
                     <p class="font-weight-black">Give Kudos</p>
                 </div>
             </v-btn>
-            <v-btn flat href="#kudo-bord">
+            <v-btn flat href="#kudo-bord" v-if="isAuthenticated">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Kudo Board</p>
                 </div>
             </v-btn>
-            <v-btn flat v-on:click="login">
+            <v-btn flat v-on:click="login" v-if="!isAuthenticated">
                 <div class="img-with-text">
                     <img src="../assets/mainmenu_2.png"/>
                     <p class="font-weight-black">Login</p>
@@ -133,7 +133,6 @@ export default {
     data() {
         return {
             dialog: false,
-            isAuthenticated: () => { return this.$store.getters.isAuthenticated; }
         }
     },
     methods: {
