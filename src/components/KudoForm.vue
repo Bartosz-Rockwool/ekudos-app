@@ -11,7 +11,7 @@
                     <v-form>
                         <v-text-field prepend-icon="person" name="name" label="to Whom?" type="text" ref="whom" v-model="name">
                         </v-text-field>
-                        <v-text-field prepend-icon="person" name="whoFrom" label="from Who?" type="text" ref="whoFrom" readonly :value="isAuthenticated.userName">
+                        <v-text-field prepend-icon="person" name="whoFrom" label="from Who?" type="text" ref="whoFrom" readonly :value="whoFrom">
                         </v-text-field>
                         <v-textarea rows="1" prepend-icon="subject" name="description" label="What do you want to say?" v-model="description">
                         </v-textarea>
@@ -41,6 +41,9 @@ export default {
         description: '',
         addingKudoLoader: false
     }),
+    computed: {
+        whoFrom: function() { return this.$store.getters.user.unique_name; },
+    },
     methods: {
         submitEntry() {
             this.addingKudoLoader = true;
@@ -52,7 +55,7 @@ export default {
                 url = 'https://ekudosapi.azurewebsites.net/api/ekudos';
             }
 
-            axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.isAuthenticated.userName })
+            axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
                 .then(response => {
                     this.responseData = response.data;
                     this.name = '';

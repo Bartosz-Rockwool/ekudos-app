@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div v-if="isAuthenticated">
+    <div v-if="isLoggedUser">
         <section>
             <KudoForm />
         </section>
@@ -39,7 +39,10 @@ export default {
   },
   data () {
     return { }
-  }
+  },
+  computed: {
+    isLoggedUser: function() { return this.$store.getters.isAuthenticated; },
+  },
 }
 </script>
 
