@@ -46,6 +46,17 @@
                         </v-layout>
                      </v-toolbar>
                      <v-list two-line>
+                        <div class="ma-8 d-flex align-center loader" v-if="listOfKudosIsLoading">
+                            <v-progress-circular
+                                :value="40"
+                                :indeterminate="true"
+                                :size="100"
+                                :width="10"
+                                color="#d20014"
+                            >
+                            </v-progress-circular>
+                        </div>
+                        <div v-if="!listOfKudosIsLoading">
                         <template v-for="(kudos, index) in kudoses">
                             <v-subheader v-if="kudos.header" :key="kudos.header"> {{ kudos.header }} </v-subheader>
                             <v-divider v-else-if="kudos.divider" :inset="kudos.inset" :key="index"> </v-divider>
@@ -71,6 +82,7 @@
                                 </div>
                             </v-list-tile>
                         </template>
+                        </div>
                      </v-list>
                 </v-card>
             </v-flex>
@@ -84,6 +96,7 @@ import axios from 'axios';
 export default {
     data: () => ({
         dialog: false,
+        listOfKudosIsLoading: true,
         kudoses: [],
         selected: 0,
         title: '',
@@ -103,7 +116,10 @@ export default {
             }
         axios
             .get(url)
-            .then(response => (this.kudoses = this.parseDate(response.data)));
+            .then(response => {
+                this.listOfKudosIsLoading = false;
+                this.kudoses = this.parseDate(response.data);
+            });
 
         this.$eventBus.$on('refresh-kudo-board', () => {
             this.changeSort();
@@ -156,5 +172,11 @@ export default {
     .avatar {
         margin-right: 20px;
         min-width: 0px;
+    }
+
+    .loader {
+        width:100px;
+        margin:auto;
+        height:300px;
     }
 </style>
