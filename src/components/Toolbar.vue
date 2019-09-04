@@ -7,7 +7,7 @@
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat v-if="isLoggedUser">
                 <div class="img-with-text">
-                    <img src="../assets/mainmenu_1.png"/>
+                    <img src="../assets/avatar_male.png"/>
                     <p class="font-weight-black">{{username}}</p>
                 </div>
             </v-btn>
@@ -23,15 +23,9 @@
                     <p class="font-weight-black">Kudo Board</p>
                 </div>
             </v-btn>
-            <v-btn flat v-if="!isLoggedUser" v-on:click="login">
-                <div class="img-with-text">
-                    <img src="../assets/mainmenu_2.png"/>
-                    <p class="font-weight-black">Login</p>
-                </div>
-            </v-btn>
             <v-btn flat v-if="isLoggedUser" v-on:click="logout">
                 <div class="img-with-text">
-                    <img src="../assets/mainmenu_2.png"/>
+                    <img src="../assets/logout.png"/>
                     <p class="font-weight-black">Logout</p>
                 </div>
             </v-btn>

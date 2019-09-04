@@ -31,6 +31,9 @@ export default {
     background-size: cover;
 }
 
+#ie-content {
+  height: 0%;
+}
 .v-content {
     margin-top: -64px;
 }
