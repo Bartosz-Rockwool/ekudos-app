@@ -27,6 +27,9 @@ const store = new Vuex.Store({
     state: { },
     mutations: { },
     getters: {
+        apiUrlBase() {
+            return "ekudosapi.azurewebsites.net/api/ekudos";
+        },
         isAuthenticated() {
             return !!AuthenticationContext.user;
         },

@@ -40,7 +40,7 @@
                                 <v-combobox
                                     v-model="selectedSort"
                                     :items="items"
-                                    @change="changeSort"
+                                    @change="refreshBoard"
                                 ></v-combobox>
                             </v-flex>
                         </v-layout>
@@ -84,6 +84,12 @@
                         </template>
                         </div>
                      </v-list>
+                     <div>
+                        <div class="text-xs-right">
+                            <v-btn color="#d20014" dark medium @click="prevPage()" :disabled="this.page <= 0">Prev</v-btn>
+                            <v-btn color="#d20014" dark medium @click="nextPage()" :disabled="this.kudoses.length < this.take">Next</v-btn>
+                        </div>
+                     </div>                     
                 </v-card>
             </v-flex>
         </v-layout>
@@ -101,18 +107,23 @@ export default {
         selected: 0,
         title: '',
         whom: '',
+        page: 0,
         selectedSort: { text: 'Newest', value: 'date-descending' },
         items: [
             { text: 'Newest', value: 'date-descending' },
             { text: 'Oldest', value: 'date-ascending' }
         ]
     }),
+    computed: {
+        skip: function() { return this.page * 5; },
+        take: function() { return 5; }
+    },
      mounted () {
          var url = '';
             if(location.protocol != 'https:'){
-                url = 'http://ekudosapi.azurewebsites.net/api/ekudos';
+                url = `http://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/`;
             } else {
-                url = 'https://ekudosapi.azurewebsites.net/api/ekudos';
+                url = `https://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/`;
             }
         axios
             .get(url)
@@ -122,7 +133,7 @@ export default {
             });
 
         this.$eventBus.$on('refresh-kudo-board', () => {
-            this.changeSort();
+            this.refreshBoard();
         });
     },
     methods: {
@@ -141,19 +152,29 @@ export default {
                         return kudos;
                     }            
                 );
-        },
-        changeSort() {
+        },        
+        refreshBoard() {
             var direct = this.selectedSort.value === 'date-descending' ? 'Desc' : 'Asc';
             var sort = "When";
             var url = '';
             if(location.protocol != 'https:'){
-                url = `http://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`;
+                url = `http://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/${sort}/${direct}`;
             } else {
-                url = `https://ekudosapi.azurewebsites.net/api/ekudos/0/0/${sort}/${direct}`;
+                url = `https://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/${sort}/${direct}`;
             }
             axios
                 .get(url)
-                .then(response => (this.kudoses = this.parseDate(response.data)));
+                .then(response => { 
+                    this.kudoses = this.parseDate(response.data)
+                });
+        },
+        nextPage(){
+            this.page = this.page + 1;
+            this.refreshBoard();
+        },
+        prevPage(){
+            this.page = this.page > 0 ? this.page - 1 : 0;
+            this.refreshBoard();
         }
     }
 };
