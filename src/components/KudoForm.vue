@@ -50,9 +50,9 @@ export default {
 
             var url = '';
             if(location.protocol != 'https:'){
-                url = 'http://ekudosapi.azurewebsites.net/api/ekudos';
+                url = `http://${this.$store.getters.apiUrlBase}`;
             } else {
-                url = 'https://ekudosapi.azurewebsites.net/api/ekudos';
+                url = `https://${this.$store.getters.apiUrlBase}`;
             }
 
             axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
