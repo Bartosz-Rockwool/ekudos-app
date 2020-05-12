@@ -126,7 +126,7 @@ export default {
                 url = `https://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/`;
             }
         axios
-            .get(url)
+            .get(url, this.$store.getters.apiTokenHeader)
             .then(response => {
                 this.listOfKudosIsLoading = false;
                 this.kudoses = this.parseDate(response.data);
@@ -163,7 +163,7 @@ export default {
                 url = `https://${this.$store.getters.apiUrlBase}/${this.skip}/${this.take}/${sort}/${direct}`;
             }
             axios
-                .get(url)
+                .get(url, this.$store.getters.apiTokenHeader)
                 .then(response => { 
                     this.kudoses = this.parseDate(response.data)
                 });
