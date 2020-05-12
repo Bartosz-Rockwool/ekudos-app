@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
@@ -48,8 +47,7 @@ const store = new Vuex.Store({
                     }
                     return
                   }
-                  console.log(token);
-                  apiToken = token;
+                 apiToken = token;
                   return 
             });
 
