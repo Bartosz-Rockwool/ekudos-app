@@ -130,6 +130,7 @@ export default {
             .then(response => {
                 this.listOfKudosIsLoading = false;
                 this.kudoses = this.parseDate(response.data);
+                this.kudoses = this.parseEmail(this.kudoses);
             });
 
         this.$eventBus.$on('refresh-kudo-board', () => {
@@ -152,6 +153,16 @@ export default {
                         return kudos;
                     }            
                 );
+        },
+        parseEmail(response){
+            return response
+                .map(
+                    (kudos) => {
+                            kudos.who = kudos.who.replace(/@[^@]+$/, '').replace(/\./g, ' ').replace(/(?:^|\s|-)+\S/g, match => match.toUpperCase());
+                            kudos.whoFrom = kudos.whoFrom.replace(/@[^@]+$/, '').replace(/\./g, ' ').replace(/(?:^|\s|-)+\S/g, match => match.toUpperCase());
+                        return kudos;
+                    }            
+                );
         },        
         refreshBoard() {
             var direct = this.selectedSort.value === 'date-descending' ? 'Desc' : 'Asc';
@@ -166,6 +177,7 @@ export default {
                 .get(url)
                 .then(response => { 
                     this.kudoses = this.parseDate(response.data)
+                    this.kudoses = this.parseEmail(this.kudoses);
                 });
         },
         nextPage(){
