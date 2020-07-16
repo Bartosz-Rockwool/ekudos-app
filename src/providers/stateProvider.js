@@ -27,6 +27,32 @@ const store = new Vuex.Store({
     state: { },
     mutations: { },
     getters: {
+        apiTokenHeader(){
+            let apiToken;
+            AuthenticationContext.acquireToken(AuthenticationContext.config.clientId, (err, token) => {
+                if (err) {
+                    let errCode = err.split(':')[0]
+                    switch (errCode) {
+                      case 'AADSTS50058': // Need to prompt for user sign in
+                        AuthenticationContext.login()
+                        break
+                      case 'AADSTS65001': // Token is invalid; grab a new one
+                        AuthenticationContext.acquireTokenRedirect(AuthenticationContext.config.clientId)
+                        break
+                      case 'AADSTS16000': // No Access
+                      default:
+                        // Need a pop-up forcing a login
+                        AuthenticationContext.login()
+                        break
+                    }
+                    return
+                  }
+                 apiToken = token;
+                  return 
+            });
+
+            return {'headers': {'Authorization': `BEARER ${apiToken}`}}
+        },
         apiUrlBase() {
             return "ekudosapi.azurewebsites.net/api/ekudos";
         },

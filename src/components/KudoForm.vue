@@ -55,7 +55,7 @@ export default {
                 url = `https://${this.$store.getters.apiUrlBase}`;
             }
 
-            axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom })
+            axios.post(url, { Whom: this.name, Description: this.description, WhoFrom: this.whoFrom }, this.$store.getters.apiTokenHeader)
                 .then(response => {
                     this.responseData = response.data;
                     this.name = '';
